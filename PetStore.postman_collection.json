@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "ba707902-385e-4df7-b5d5-3840ceda4741",
+		"name": "PetStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22267348"
+	},
+	"item": [
+		{
+			"name": "add_list users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"username\": \"{{name_1}}\",\r\n    \"firstName\": \"jack\",\r\n    \"lastName\": \"daniels\",\r\n    \"email\": \"qwert@mail.ru\",\r\n    \"password\": \"qwer445\",\r\n    \"phone\": \"111444\",\r\n    \"userStatus\": 0\r\n  },\r\n  {\r\n    \"id\": 0,\r\n    \"username\": \"{{name_2}}\",\r\n    \"firstName\": \"Daniel\",\r\n    \"lastName\": \"Jackson\",\r\n    \"email\": \"qwert@mail.ru\",\r\n    \"password\": \"qwe213\",\r\n    \"phone\": \"123345\",\r\n    \"userStatus\": 0\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/createWithArray",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"createWithArray"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Сохраненяем номер телефона\", function () {\r",
+							"    var jsonData = JSON.parse(responseBody)\r",
+							"    pm.collectionVariables.set(\"phone_2\", jsonData.phone)\r",
+							"});\r",
+							"pm.test(\"В теле ответа содержится name_1\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.include(pm.collectionVariables.get(\"name_1\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"string\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/{{name_2}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"{{name_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"phone_3\", 456);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Сохранение id user 3 в переменную user_id\", function () {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    pm.collectionVariables.set(\"user_id\", jsonData.message);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"DanielNikolson12\",\r\n  \"firstName\": \"{{name_1}}\",\r\n  \"lastName\": \"{{name_2}}\",\r\n  \"email\": \"daew1@mail.ru\",\r\n  \"password\": \"qwer546\",\r\n  \"phone\": \"{{phone_3}}\",\r\n  \"userStatus\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user 1.2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Сохранение имени User 3 в переменную name_3\", function () {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    pm.collectionVariables.set(\"name_3\", jsonData.username);\r",
+							"});\r",
+							"pm.test(\"Id User 3 содержится в ответе от сервера\", function () {\r",
+							"pm.expect(pm.response.text()).to.include(pm.collectionVariables.get(\"user_id\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"DanielNikolson12\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/DanielNikolson12",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"DanielNikolson12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{user_id}},\r\n  \"username\": \"JackNikolson8787\",\r\n  \"firstName\": \"Kira\",\r\n  \"lastName\": \"Ken\",\r\n  \"email\": \"dsae212@mail.ru\",\r\n  \"password\": \"151623qwe\",\r\n  \"phone\": \"11145785\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/{{name_3}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"{{name_3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user 1.3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Id User 3 не содержится в ответе от сервера\", function () {\r",
+							"pm.expect(pm.response.text()).to.not.include(pm.collectionVariables.get(\"name_3\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"DanielNikolson12\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/JackNikolson8787",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"JackNikolson8787"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://petstore.swagger.io/v2",
+			"type": "string"
+		},
+		{
+			"key": "name_1",
+			"value": "Jack",
+			"type": "string"
+		},
+		{
+			"key": "name_2",
+			"value": "Jonh",
+			"type": "string"
+		},
+		{
+			"key": "name_3",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "phone_1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "phone_2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
