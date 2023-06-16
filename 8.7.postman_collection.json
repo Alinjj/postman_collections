@@ -31,12 +31,12 @@
 				"header": [
 					{
 						"key": "email",
-						"value": "Deadm7us@mail.ru",
+						"value": "",
 						"type": "text"
 					},
 					{
 						"key": "password",
-						"value": "tyxbeq-safsUx-4korzy",
+						"value": "",
 						"type": "text"
 					}
 				],
